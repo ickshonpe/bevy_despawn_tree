@@ -6,7 +6,7 @@ use bevy::prelude::*;
 /// 
 /// Equivalent to despawn_recursive if the entity has no parents.
 ///
-/// Fails silently if the entity is not present.
+/// Fails silently if the entity does not exist.
 #[derive(Debug)]
 pub struct DespawnTree {
     pub entity: Entity,
@@ -27,10 +27,12 @@ pub trait DespawnTreeEntityCommandsExt {
 }
 
 impl DespawnTreeEntityCommandsExt for EntityCommands<'_, '_, '_> {
-    /// Walk up the bevy hierarchy tree from the given entity to the root parent entity, 
-    /// then call despawn_with_children_recursive on the root parent entity.
+    /// Walks up the bevy hierarchy tree from the given entity to the root parent entity, 
+    /// then calls despawn_with_children_recursive on the root parent entity.
     /// 
     /// Equivalent to despawn_recursive if the entity has no parents.
+    ///
+    /// Fails silently if the entity does not exist.
     fn despawn_tree(&mut self) {
         let entity = self.id();
         self.commands().add(DespawnTree { entity });
